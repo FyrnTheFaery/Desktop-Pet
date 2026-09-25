@@ -3,6 +3,18 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+
+// FIX ME
+// async function logGlobalMousePosition() {
+//     const appWindow = getCurrentWebviewWindow();
+    
+//     // Gets the cursor position relative to the top-left of the main monitor
+//     const position = await appWindow.getCursorPosition(); 
+    
+//     console.log(`Global Position -> X: ${position.x}, Y: ${position.y}`);
+//   }
+
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
