@@ -1,3 +1,5 @@
+use std::sync::{Arc, atomic::AtomicBool};
+
 mod inputs;
 
 // use device_query::{DeviceQuery, DeviceState, MouseState, Keycode};
@@ -17,7 +19,11 @@ fn greet(name: &str) -> String {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet, inputs::get_input_streams])
+        .manage(inputs::MouseStreamState{is_streaming: Arc::new(AtomicBool::new(false))})
+        .invoke_handler(tauri::generate_handler![greet, 
+            inputs::init_mouse_stream, 
+            inputs::init_keyboard_stream,
+            inputs::drop_mouse_stream])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
