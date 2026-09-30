@@ -1,6 +1,6 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
+// import { useState } from "react";
+// import reactLogo from "./assets/react.svg";
+// import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import {WebviewWindow} from "@tauri-apps/api/webviewWindow";
 import "./App.css";
@@ -31,14 +31,14 @@ async function spawnWindow(title: string, width: number, height: number) {
 }
 
 function App() {
-	const [greetMsg, setGreetMsg] = useState("");
+	// const [greetMsg, setGreetMsg] = useState("");
 	// const [keyboardListening, setKeyboardListening] = useState(false);
-	const [name, setName] = useState("");
+	// const [name, setName] = useState("");
 
-	async function greet() {
-		// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-		setGreetMsg(await invoke("greet", { name }));
-	}
+	// async function greet() {
+	// 	// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+	// 	setGreetMsg(await invoke("greet", { name }));
+	// }
 
 	return (
 		<main className="container">
