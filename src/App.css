@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+:focus-visible {
+   outline: 2px auto var(--color-neutral-50); 
+}
+
+a {
+    font-weight: 500;
+    color: var(--color-teal-300);
+    text-decoration: inherit;
+}
+a:hover {
+    color: var(--color-teal-400);
+}
+
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
 }

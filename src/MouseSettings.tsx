@@ -1,5 +1,6 @@
 import { Channel, invoke } from "@tauri-apps/api/core";
 import { useState } from "react";
+import Button from "./components/wrappers/Button";
 
 interface MouseSettingsProps {} 
 
@@ -63,9 +64,9 @@ export const MouseSettings: React.FC<MouseSettingsProps> = ({}) => {
 
     return (
         <>
-            <button onClick={() => handleMouseToggle()}>
+            <Button onClick={() => handleMouseToggle()}>
 				{isMouseListening ? "Stop Mouse Listener" : "Start Mouse Listener"}
-			</button>
+			</Button>
 
 			{
 				isMouseListening ? <p>Mouse Listener On!</p> : <p>Mouse Listener Off!</p>

@@ -2,14 +2,33 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
-import {
-	WebviewWindow,
-	getCurrentWebviewWindow,
-} from "@tauri-apps/api/webviewWindow";
+import {WebviewWindow} from "@tauri-apps/api/webviewWindow";
 import "./App.css";
 import { MouseSettings } from "./MouseSettings";
+import Button from "./components/wrappers/Button";
+import Divider from "./components/Divider";
 
-const isSettings = window.location.hash === "#settings";
+let windowCounter = 0;
+
+async function spawnWindow(title: string, width: number, height: number) {
+  windowCounter++;
+  const uniqueLabel = `window-${Date.now()}-${windowCounter}`;
+
+  const webview = new WebviewWindow(uniqueLabel, {
+    url: 'index.html', // Or a unique route like 'index.html#/settings'
+    title: title,
+    width: width,
+    height: height,
+  });
+
+  webview.once('tauri://created', () => {
+    console.log(`Window ${uniqueLabel} successfully spawned!`);
+  });
+
+  webview.once('tauri://error', (e) => {
+    console.error('Failed to create window:', e);
+  });
+}
 
 function App() {
 	const [greetMsg, setGreetMsg] = useState("");
@@ -23,7 +42,7 @@ function App() {
 
 	return (
 		<main className="container">
-			<h1>Welcome to Tauri + React</h1>
+			{/* <h1>Welcome to Tauri + React</h1>
 			<div className="row">
 				<a href="https://vite.dev" target="_blank">
 					<img src="/vite.svg" className="logo vite" alt="Vite logo" />
@@ -48,23 +67,13 @@ function App() {
 					onChange={(e) => setName(e.currentTarget.value)}
 					placeholder="Enter a name..."
 				/>
-				<button type="submit">Greet</button>
+				<Button type="submit">Greet</Button>
 			</form>
-			<p>{greetMsg}</p>
+			<p>{greetMsg}</p> */}
+			<Divider isHorizontal={true}/>
 			<MouseSettings/>
 
-			{/* <button onToggle={() => handleMouseToggle}>
-				{keyboardListening ? "Stop Keyboard Listener" : "Start Keyboard Listener"}
-			</button>
-
-			{
-				mouseInput ? 
-				<>
-					<p>Mouse Coords: {mouseInput.coords[0]}, {mouseInput.coords[1]}</p>
-					<p>Mouse Buttons: {mouseInput.button_pressed[1]}, {mouseInput.button_pressed[2]}, {mouseInput.button_pressed[3]}, {mouseInput.button_pressed[4]}, {mouseInput.button_pressed[5]}</p>
-					<p>Right Mouse Button: {mouseInput.button_pressed[2]}</p>
-				</> : "No Mouse Input Registered"
-			} */}
+			<Button onClick={() => spawnWindow("Test Window", 1000, 1000)}>Spawn Window</Button>
 		</main>
 	);
 }
