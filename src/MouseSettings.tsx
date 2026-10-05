@@ -1,5 +1,6 @@
 import { Channel, invoke } from "@tauri-apps/api/core";
-import { useState } from "react";
+import { listen } from "@tauri-apps/api/event";
+import { useEffect, useState } from "react";
 import Button from "./components/wrappers/Button";
 
 interface MouseSettingsProps {} 
@@ -13,39 +14,65 @@ export const MouseSettings: React.FC<MouseSettingsProps> = ({}) => {
 
 	const [isMouseListening, setIsMouseListening] = useState(false);
 	const [mouseInput, setMouseInput] = useState<MouseInput>();
+	const MOUSE_ID = "MOUSE";
 
-    async function startMouseListener() {
+	// Make all windows stop listening if the listener is turned off
+	useEffect(() => {
+		const unlisten = listen<string>("stream-stopped", (event) => {
+			if (event.payload === MOUSE_ID) {
+				setIsMouseListening(false);
+				setMouseInput(undefined);
+			}
+		});
+		return () => { unlisten.then((stop) => stop()); };
+	}, []);
+
+	// Make sure that any new windows can respond to and update the listener
+	useEffect(() => {
+		const join = () => startMouseListener(true).then((joined) => {
+			if (joined) setIsMouseListening(true);
+		});
+		join();
+
+		const unlisten = listen<string>("stream-started", (event) => {
+			if (event.payload === MOUSE_ID) join();
+		});
+		return () => { unlisten.then((stop) => stop()); };
+	}, []);
+
+	// With joinOnly, only joins a running listener. Returns whether this window is now listening.
+    async function startMouseListener(joinOnly = false): Promise<boolean> {
 		const channel = new Channel<MouseInput>();
-		
-		console.log("I'm in the mouse listener func");
 
 		channel.onmessage = (mouse) => {
 
 			const [x, y] = mouse.coords;
 			const buttons = mouse.button_pressed;
 
+			console.log(mouse);
 			console.log(`Mouse position: X: ${x}, Y: ${y}`);
 			
-			// Check if the left mouse button (usually index 0 or 1 depending on OS bindings) is pressed
+			// Check if the left mouse button is pressed
 			if (buttons[1]) {
-			console.log("Left mouse button is pressed!");
+				console.log("Left mouse button is pressed!");
 			}
 
 			setMouseInput(mouse);
 		};
 
 		try {
-			// 3. Make sure the argument name matches your Rust function signature (e.g., "channel")
-			await invoke('init_mouse_stream', { channel, state: true });
+			const listening = await invoke<boolean>('init_mouse_stream', { channelId: MOUSE_ID, channel, joinOnly });
 			console.log("Mouse stream initialized successfully.");
+			return listening;
 		} catch (error) {
 			console.error("Failed to initialize mouse stream:", error);
+			return false;
 		}
 	}
 
 	async function stopMouseListener() {
 		try {
-			await invoke('drop_mouse_stream');
+			await invoke('drop_channel', { channelId: MOUSE_ID });
 		}
 		catch (error) {
 			console.error("Failed to drop mouse stream:", error);
@@ -76,7 +103,7 @@ export const MouseSettings: React.FC<MouseSettingsProps> = ({}) => {
 				isMouseListening && mouseInput ? 
 				<>
 					<p>Mouse Coords: {mouseInput.coords[0]}, {mouseInput.coords[1]}</p>
-					<p>Mouse Buttons: {mouseInput.button_pressed[1]}, {mouseInput.button_pressed[2]}, {mouseInput.button_pressed[3]}, {mouseInput.button_pressed[4]}, {mouseInput.button_pressed[5]}</p>
+					<p>Mouse Buttons: {String(mouseInput.button_pressed[1])}, {String(mouseInput.button_pressed[2])}, {String(mouseInput.button_pressed[3])}, {String(mouseInput.button_pressed[4])}, {String(mouseInput.button_pressed[5])}</p>
 				</> : <>
 					<p>No Mouse Coordinates</p>
 					<p>No Mouse Button Inputs</p>
