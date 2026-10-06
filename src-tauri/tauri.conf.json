@@ -12,7 +12,8 @@
   "app": {
     "windows": [
       {
-        "title": "desktop-pet",
+        "label": "desktop-pet",
+        "title": "Desktop-Pet",
         "width": 800,
         "height": 600
       }

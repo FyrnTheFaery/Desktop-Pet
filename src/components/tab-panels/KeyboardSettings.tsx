@@ -1,7 +1,7 @@
 import { invoke, Channel } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { useEffect, useState } from 'react';
-import Button from './components/wrappers/Button';
+import Button from '../wrappers/Button';
 
 export interface KeyboardInput {
 	type: "KeyboardInputs";

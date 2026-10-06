@@ -2,44 +2,45 @@
 // import reactLogo from "./assets/react.svg";
 // import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
-import {WebviewWindow} from "@tauri-apps/api/webviewWindow";
 import "./App.css";
-import { MouseSettings } from "./MouseSettings";
-import Button from "./components/wrappers/Button";
-import Divider from "./components/Divider";
-import { KeyboardSettings } from "./KeyboardSettings";
-
-let windowCounter = 0;
-
-async function spawnWindow(title: string, width: number, height: number) {
-  windowCounter++;
-  const uniqueLabel = `window-${Date.now()}-${windowCounter}`;
-
-  const webview = new WebviewWindow(uniqueLabel, {
-    url: 'index.html', // Maybe make this an input param?
-    title: title,
-    width: width,
-    height: height,
-  });
-
-  webview.once('tauri://created', () => {
-    console.log(`Window ${uniqueLabel} successfully spawned!`);
-  });
-
-  webview.once('tauri://error', (e) => {
-    console.error('Failed to create window:', e);
-  });
-}
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "./components/wrappers/Tabs";
+import { SettingsPanel } from "./components/tab-panels/SettingsPanel";
+import { HomePanel } from "./components/tab-panels/HomePanel";
 
 function App() {
 
 	return (
-		<main className="container">
-			<Divider isHorizontal={true}/>
-			<MouseSettings/>
-			<KeyboardSettings/>
-
-			<Button onClick={() => spawnWindow("Test Window", 600, 400)}>Spawn Window</Button>
+		<main className={"container"}>
+			<Tabs>
+				<TabList>
+					<Tab id="home">Home</Tab>
+					<Tab id="input-settings">Input Settings</Tab>
+					<Tab id="collaboration-settings">Collaboration Settings</Tab>
+					<Tab id="mouse-model">Mouse Models</Tab>
+					<Tab id="keyboard-model">Keyboard Models</Tab>
+					<Tab id="pngtuber-model">PNGTuber Models</Tab>
+				</TabList>
+				<TabPanels>
+					<TabPanel id="home">
+						<HomePanel/>
+					</TabPanel>
+					<TabPanel id="input-settings">
+						<SettingsPanel/>
+					</TabPanel>
+					<TabPanel id="collaboration-settings">
+						<p>Collaboration Settings</p>
+					</TabPanel>
+					<TabPanel id="mouse-model">
+						<p>Mouse Panel</p>
+					</TabPanel>
+					<TabPanel id="keyboard-model">
+						<p>Keyboard Panel</p>
+					</TabPanel>
+					<TabPanel id="pngtuber-model">
+						<p>PNGTuber Panel</p>
+					</TabPanel>
+				</TabPanels>
+			</Tabs>
 		</main>
 	);
 }
