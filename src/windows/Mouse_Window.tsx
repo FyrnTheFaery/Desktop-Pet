@@ -25,6 +25,8 @@ export async function spawnMouseWindow(title: string, width: number, height: num
 
 const MouseWindow: React.FC<{}> = ({}) => {
     return (
-        <p>Mouse Window</p>
+        <section>
+            <p>Mouse Window</p>
+        </section>
     );
 }

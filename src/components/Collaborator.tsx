@@ -1,7 +1,7 @@
-import { PNGTuberModel } from "./models/PNGTuberModel";
+import { PNGTuberModelProps } from "./models/PNGTuberModel";
 
 export interface CollaboratorModel {
-    model: PNGTuberModel | String; // Collaborator's PNGTuber Model, Mouse Model, or Keyboard Model
+    model: PNGTuberModelProps | String; // Collaborator's PNGTuber Model, Mouse Model, or Keyboard Model
 }
 
 export interface Collaborator {

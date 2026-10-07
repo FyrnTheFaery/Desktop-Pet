@@ -1,18 +1,5 @@
-export interface Layer {
-    src: String;
-    rotation: number;
-    rotationInput: String;
-    xPosition: number;
-    xMovementInput: String;
-    yPosition: String;
-    yMovementInput: String;
-    zIndex: number;
-    parent: Layer | null;
-}
+import { Layer, ModelProps } from "./ModelUtils";
 
-export interface PNGTuberModel {
-    name: String;
-    width: number;
-    height: number;
+export interface PNGTuberModelProps extends ModelProps {
     layers: Layer[];
 }

@@ -1,5 +1,5 @@
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { Layer, PNGTuberModel } from "../components/models/PNGTuberModel";
+import { PNGTuberModelProps } from "../components/models/PNGTuberModel";
 
 let pngtuberCounter = 0;
 
@@ -25,9 +25,7 @@ export async function spawnPNGTuberWindow(title: string, width: number, height: 
 }
 
 export interface PNGTuberWindowProps {
-    foreground: Layer[];
-    pngTuber: PNGTuberModel;
-    background: Layer[];
+    pngTuber: PNGTuberModelProps;
 }
 
 const PNGTuberWindow: React.FC<PNGTuberWindowProps> = ({}) => {

@@ -2,6 +2,7 @@ import { Channel, invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { useEffect, useState } from "react";
 import Button from "../wrappers/Button";
+import { MouseModel } from "../models/MouseModel";
 
 interface MouseSettingsProps {} 
 
@@ -109,6 +110,7 @@ export const MouseSettings: React.FC<MouseSettingsProps> = ({}) => {
 					<p>No Mouse Button Inputs</p>
 				</>
 			}
+			{/* <MouseModel outlineColor={Color} outlineThickness={0} leftButtonOutlineColor={undefined} leftButtonOutlineThickness={0} leftButtonColor={undefined} leftButtonPressedColor={undefined} middleButtonOutlineColor={undefined} middleButtonOutlineThickness={0} middleButtonColor={undefined} middleButtonPressedColor={undefined} rightButtonOutlineColor={undefined} rightButtonOutlineThickness={0} rightButtonColor={undefined} rightButtonPressedColor={undefined} bodyColor={undefined} showMouseBody={false} id={undefined} name={undefined} thumbnailSrc={undefined} width={0} height={0}/> */}
         </>
     );
 };
