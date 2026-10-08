@@ -6,6 +6,7 @@ import "./App.css";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "./components/wrappers/Tabs";
 import { SettingsPanel } from "./components/tab-panels/SettingsPanel";
 import { HomePanel } from "./components/tab-panels/HomePanel";
+import { MousePanel } from "./components/tab-panels/MousePanel";
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
 						<p>Collaboration Settings</p>
 					</TabPanel>
 					<TabPanel id="mouse-model">
-						<p>Mouse Panel</p>
+						<MousePanel/>
 					</TabPanel>
 					<TabPanel id="keyboard-model">
 						<p>Keyboard Panel</p>
