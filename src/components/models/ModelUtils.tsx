@@ -40,3 +40,10 @@ export interface ModelProps {
     width: number;
     height: number;
 }
+
+export interface ModelInfoProps {
+    id: String;
+    name: String;
+    thumbnailSrc: String;
+    modelFile: String;
+}

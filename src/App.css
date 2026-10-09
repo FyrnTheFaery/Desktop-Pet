@@ -34,6 +34,9 @@ a:hover {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  width: 100%;
+  height: fit-content;
+  max-width: 100%;
 }
 
 .container {

@@ -34,7 +34,7 @@ export function Tabs(props: TabsProps) {
 }
 
 export function TabList<T>(props: TabListProps<T>) {
-    return <RACTabList {...props} className={composeTailwindRenderProps(props.className, "flex flex-row w-full h-fit items-center justify-between")}/>;
+    return <RACTabList {...props} className={composeTailwindRenderProps(props.className, "flex flex-row w-full h-fit")}/>;
 }
 
 const selectionStyles = tv({
@@ -61,9 +61,9 @@ export function Tab(props: TabProps) {
 }
 
 export function TabPanels<T>(props: TabPanelsProps<T>) {
-    return <RACTabPanels {...props} />;
+    return <RACTabPanels {...props} className='flex w-full h-fit'/>;
 }
 
 export function TabPanel(props: TabPanelProps) {
-    return <RACTabPanel {...props} />;
+    return <RACTabPanel {...props} className='flex w-full h-fit'/>;
 }

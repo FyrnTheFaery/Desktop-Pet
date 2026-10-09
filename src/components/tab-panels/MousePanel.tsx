@@ -1,11 +1,39 @@
-import { parseColor } from "react-aria-components"
+import { GridListLoadMoreItem, parseColor } from "react-aria-components"
 import { MouseModel } from "../models/MouseModel"
+import { GridList, GridListItem } from "../wrappers/GridList"
+import Button from "../wrappers/Button"
 
+// FIX_ME - Get the mouse models from the backend
 export const MousePanel: React.FC<{}> = () => {
+
     return (
-        <>
-            <p>Mouse Panel</p>
-			<MouseModel outlineColor={parseColor("#FFFFFF")} outlineThickness={4} 
+        <section className="flex flex-col w-full h-fit gap-4">
+            <h2>Mouse Models</h2>
+            <GridList
+                layout="grid"
+                orientation="vertical"
+                aria-label="Mouse Models"
+                selectionMode="multiple"
+                className={"flex w-full h-fit"}
+            >
+                <GridListItem>
+                    <Button slot="drag" />
+                    {/* <Checkbox slot="selection" /> */}
+                </GridListItem>
+                <GridListItem>
+                    <Button slot="drag" />
+                    {/* <Checkbox slot="selection" /> */}
+                </GridListItem>
+                {/* <GridListLoadMoreItem /> */}
+            </GridList>
+            <div className="flex flex-col w-full h-fit gap-4">
+                <div className="flex flex-row w-full h-fit gap-8">
+                    <Button className={"flex w-full"}>Delete Model</Button>
+                    <Button className={"flex w-full"}>Add Model</Button>
+                </div>
+                <Button className={"flex w-full"}>Launch Selected Models</Button>
+            </div>
+			{/* <MouseModel outlineColor={parseColor("#FFFFFF")} outlineThickness={4} 
                 leftButtonOutlineColor={parseColor("#FFFFFF")} leftButtonOutlineThickness={4} 
                 leftButtonColor={parseColor("#ff0000")} leftButtonPressedColor={parseColor("#6f0000")} 
                 middleButtonOutlineColor={parseColor("#FFFFFF")} middleButtonOutlineThickness={4} 
@@ -14,7 +42,7 @@ export const MousePanel: React.FC<{}> = () => {
                 rightButtonColor={parseColor("#000dff")} rightButtonPressedColor={parseColor("#00026f")} 
                 bodyColor={parseColor("#7a7a7a")} showMouseBody={true} id={"123"} name={"Mouse"} 
                 thumbnailSrc={""} width={200} height={250}
-            />
-        </>
+            /> */}
+        </section>
     )
 }

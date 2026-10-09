@@ -28,10 +28,10 @@ export const SettingsPanel: React.FC<{}> = () => {
     }
 
     return (
-        <>
+        <section className="flex flex-col gap-4">
             <MouseSettings/>
             <KeyboardSettings/>
             <Button onClick={() => spawnWindow("Test Window", 800, 600)}>Spawn Window</Button>
-        </>
+        </section>
     );
 }
