@@ -2,6 +2,7 @@ import { GridListLoadMoreItem, parseColor } from "react-aria-components"
 import { MouseModel } from "../models/MouseModel"
 import { GridList, GridListItem } from "../wrappers/GridList"
 import Button from "../wrappers/Button"
+import { Icon } from "@iconify/react"
 
 // FIX_ME - Get the mouse models from the backend
 export const MousePanel: React.FC<{}> = () => {
@@ -10,19 +11,20 @@ export const MousePanel: React.FC<{}> = () => {
         <section className="flex flex-col w-full h-fit gap-4">
             <h2>Mouse Models</h2>
             <GridList
-                layout="grid"
+                // layout="grid"
                 orientation="vertical"
                 aria-label="Mouse Models"
                 selectionMode="multiple"
-                className={"flex w-full h-fit"}
+                className={"flex flex-col w-full h-fit"}
             >
                 <GridListItem>
-                    <Button slot="drag" />
-                    {/* <Checkbox slot="selection" /> */}
+                    {/* <Button slot="drag">
+                        <Icon icon={"material-symbols:drag-indicator"}/>
+                    </Button> */}
+                    <h3>Item 1</h3>
                 </GridListItem>
                 <GridListItem>
-                    <Button slot="drag" />
-                    {/* <Checkbox slot="selection" /> */}
+                    <h3>Item 2</h3>
                 </GridListItem>
                 {/* <GridListLoadMoreItem /> */}
             </GridList>
