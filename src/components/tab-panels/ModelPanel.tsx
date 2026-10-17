@@ -75,41 +75,40 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                 <GridListItem>
                     <h3>Item 2</h3>
                 </GridListItem>
+                <GridListItem>
+                    <h3>Item 3</h3>
+                </GridListItem>
                 {/* <GridListLoadMoreItem /> */}
             </GridList>
             <section className="flex flex-row w-full h-fit gap-8">
                 <div className="flex flex-row w-fit h-fit gap-4">
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}
-                        <Button><Icon icon="material-symbols:add-2-rounded"/></Button>
+                        <Button variant="secondary"><Icon icon="material-symbols:add-2-rounded"/></Button>
                         
                         <Modal>
                             <Dialog>
                                 {({ close }) => (
-                                    <>
+                                    <Form
+                                        action={formData => {
+                                            let modelName = formData.get('name') as String
+                                            let thumbnail = formData.get('thumbnail') as String
+                                            handleAddClick(modelName, thumbnail)
+                                        }}
+                                        className="m-4"
+                                    >
                                         <Heading slot="title">Create Model</Heading>
-                                        <Form
-                                            action={formData => {
-                                                let modelName = formData.get('name') as String
-                                                let thumbnail = formData.get('thumbnail') as String
-                                                handleAddClick(modelName, thumbnail)
-                                            }}
-                                        >
-                                            <TextField isRequired name="name" type="text">
-                                                <Label>Name</Label>
-                                                <Input className="react-aria-Input inset" placeholder="Enter your model's name" />
-                                                <FieldError />
-                                            </TextField>
-                                            {/* FIX_ME - Update the thumbnail to take in a default or use a user-specified image */}
-                                            <TextField isRequired name="thumbnail" type="text">
-                                                <Label>Name</Label>
-                                                <Input className="react-aria-Input inset" placeholder="Enter your model's name" />
-                                                <FieldError />
-                                            </TextField>
+                                        <TextField isRequired name="name" label="Name" type="text" placeholder="Enter your model's name">
+                                            <FieldError />
+                                        </TextField>
+                                        <TextField isRequired name="thumbnail" label="Model Thumbnail" type="text" placeholder="Enter your model's thumbnail">
+                                            <FieldError />
+                                        </TextField>
+                                        <div className="flex flex-row w-full justify-end gap-4">
                                             <Button onPress={close}>Cancel</Button>
                                             <Button type="submit">Create Model</Button>
-                                        </Form>
-                                    </>
+                                        </div>
+                                    </Form>
                                 )}
                             </Dialog>
                         </Modal>
@@ -118,7 +117,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                         selectedModels.length > 1 ? 
                         <DialogTrigger>
                             {/* Clicking this button automatically opens the modal dialog */}
-                            <Button isDisabled={canEdit}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
+                            <Button variant="secondary" isDisabled={canEdit}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
                             
                             <Modal>
                                 <Dialog>
@@ -139,7 +138,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                     }
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}
-                        <Button isDisabled={canDelete}><Icon icon="material-symbols:delete-outline-rounded"/></Button>
+                        <Button variant="destructive" isDisabled={canDelete}><Icon icon="material-symbols:delete-outline-rounded"/></Button>
                         
                         <Modal>
                             <Dialog>
@@ -153,8 +152,8 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                                         {/* FIX_ME - put the list of selected models here */}
                                         
                                         {/* Pressing this button automatically closes it */}
-                                        <Button onPress={close}>Cancel</Button>
-                                        <Button onClick={() => handleDeleteClick()}>Delete Models</Button>
+                                        <Button variant="primary" onPress={close}>Cancel</Button>
+                                        <Button variant="destructive" onClick={() => handleDeleteClick()}>Delete Models</Button>
                                     </>
                                 )}
                             </Dialog>
@@ -164,7 +163,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                     {/* <Button isDisabled={canEdit} onClick={()=> handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button> */}
                     {/* <Button isDisabled={canDelete} onClick={()=>handleDeleteClick()}><Icon icon="material-symbols:delete-outline-rounded"/></Button> */}
                 </div>
-                <Button className={"w-full"}>Launch Models</Button>
+                <Button variant="primary" className={"w-full"}>Launch Models</Button>
             </section>
         </section>
     )

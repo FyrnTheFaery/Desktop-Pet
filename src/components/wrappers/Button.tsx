@@ -12,7 +12,7 @@ let button = tv({
     base: "flex flex-row justify-center items-center w-fit h-fit p-2 rounded-xl",
     variants: {
         variant: {
-            primary: 'bg-neutral-700 border-t-2 border-neutral-600 hover:bg-neutral-600 hover:border-neutral-500 active:bg-neutral-900 active:border-t-0 active:border-b-2 active:border-neutral-700 aria-pressed:bg-neutral-900',
+            primary: 'bg-linear-to-br from-violet-200/50 via-violet-300/50 to-violet-400/50 border-2 border-neutral-600 hover:bg-neutral-600 hover:border-neutral-500 active:bg-neutral-900 active:border-t-0 active:border-b-2 active:border-neutral-700 aria-pressed:bg-neutral-900',
             secondary: 'bg-neutral-900 border-1 border-neutral-500 hover:bg-neutral-50 hover:text-neutral-950 hover:border-neutral-50',
             destructive: 'bg-rose-700 border-t-2 border-rose-600 hover:bg-rose-600 hover:border-rose-500 active:bg-rose-900 active:border-t-0 active:border-b-2 active:border-rose-700 aria-pressed:bg-rose-900 text-neutral-50',
             quiet: 'border-0 bg-transparent hover:bg-neutral-200 pressed:bg-neutral-300 text-neutral-800 dark:hover:bg-neutral-700 dark:pressed:bg-neutral-600 dark:text-neutral-100'

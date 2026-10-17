@@ -23,8 +23,8 @@ export function GridList<T>({children, ...props}: GridListProps<T>) {
             className={composeTailwindRenderProps(
                 props.className,
                 isHorizontal
-                ? 'flex flex-row flex-nowrap overflow-x-auto relative w-full max-w-[500px] bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm'
-                : 'overflow-auto w-[200px] relative bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm'
+                ? 'flex flex-row flex-nowrap overflow-x-auto relative w-full max-w-[500px] bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
+                : 'overflow-auto w-[200px] relative bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
             )}
         >
             {children}
@@ -42,9 +42,9 @@ const itemStyles = tv({
     variants: {
         isSelected: {
             false:
-                'hover:bg-neutral-100 pressed:bg-neutral-100 dark:hover:bg-neutral-700/60 dark:pressed:bg-neutral-700/60',
+                'hover:bg-violet-100 pressed:bg-violet-100 dark:hover:bg-violet-300/50 dark:pressed:bg-violet-400/60',
             true: [
-                'bg-blue-100 dark:bg-blue-700/30 hover:bg-blue-200 pressed:bg-blue-200 dark:hover:bg-blue-700/40 dark:pressed:bg-blue-700/40 z-20',
+                'bg-violet-100 dark:bg-violet-700/30 hover:bg-violet-200 pressed:bg-violet-200 dark:hover:bg-violet-700/40 dark:pressed:bg-violet-700/40 z-20',
                 '[[data-orientation=vertical]_&]:border-y-blue-200 [[data-orientation=vertical]_&]:dark:border-y-blue-900',
                 '[[data-orientation=horizontal]_&]:border-x-blue-200 [[data-orientation=horizontal]_&]:dark:border-x-blue-900 '
             ].join(' ')
