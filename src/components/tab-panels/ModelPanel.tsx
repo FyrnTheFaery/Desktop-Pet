@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Modal } from "../wrappers/Modal"
 import Form from "../wrappers/Form"
 import { TextField } from "../wrappers/Textfield"
-import { FieldError, Input, Label } from "../wrappers/Field"
+import { FieldError } from "../wrappers/Field"
 
 export interface ModelPanelProps {
     type: "Mouse" | "Keyboard" | "PNGTuber";
@@ -18,8 +18,8 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
 
     let models: Array<ModelInfoProps> = []
     let selectedModels: Array<ModelInfoProps> = [];
-    let [canEdit, setCanEdit] = useState<boolean>(true);
-    let [canDelete, setCanDelete] = useState<boolean>(true);
+    let [canEdit, setCanEdit] = useState<boolean>(false);
+    let [canDelete, setCanDelete] = useState<boolean>(false);
 
     function handleAddClick(modelName: ModelInfoProps["name"], thumbnailSrc: ModelInfoProps["thumbnailSrc"]) {
         // FIX_ME - create a new model file in the backend as soon as the user finishes filling out the form
@@ -105,7 +105,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                                             <FieldError />
                                         </TextField>
                                         <div className="flex flex-row w-full justify-end gap-4">
-                                            <Button onPress={close}>Cancel</Button>
+                                            <Button variant="secondary" onPress={close}>Cancel</Button>
                                             <Button type="submit">Create Model</Button>
                                         </div>
                                     </Form>
@@ -127,14 +127,14 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                                             <p>Are you sure you want to edit multiple models at once?</p>
                                             
                                             {/* Pressing this button automatically closes it */}
-                                            <Button onPress={close}>Cancel</Button>
-                                            <Button isDisabled={canEdit} onClick={() => handleEditClick()}>Edit Models</Button>
+                                            <Button variant="secondary" onPress={close}>Cancel</Button>
+                                            <Button variant="primary" isDisabled={canEdit} onClick={() => handleEditClick()}>Edit Models</Button>
                                         </>
                                     )}
                                 </Dialog>
                             </Modal>
                         </DialogTrigger>
-                        : <Button isDisabled={canEdit} onClick={() => handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
+                        : <Button variant="secondary" isDisabled={canEdit} onClick={() => handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
                     }
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}

@@ -12,13 +12,31 @@ let button = tv({
     base: "flex flex-row justify-center items-center w-fit h-fit p-2 rounded-xl",
     variants: {
         variant: {
-            primary: 'bg-linear-to-br from-violet-200/50 via-violet-300/50 to-violet-400/50 border-2 border-neutral-600 hover:bg-neutral-600 hover:border-neutral-500 active:bg-neutral-900 active:border-t-0 active:border-b-2 active:border-neutral-700 aria-pressed:bg-neutral-900',
-            secondary: 'bg-neutral-900 border-1 border-neutral-500 hover:bg-neutral-50 hover:text-neutral-950 hover:border-neutral-50',
-            destructive: 'bg-rose-700 border-t-2 border-rose-600 hover:bg-rose-600 hover:border-rose-500 active:bg-rose-900 active:border-t-0 active:border-b-2 active:border-rose-700 aria-pressed:bg-rose-900 text-neutral-50',
+            primary: 'bg-linear-to-br dark:from-blue-200/50 dark:via-blue-400/50 dark:to-blue-600/50 ' + 
+                'hover:bg-linear-to-br dark:hover:from-blue-200/50 dark:hover:via-blue-300/50 dark:hover:to-blue-400/50 ' +
+                'active:bg-linear-to-br dark:active:from-blue-700/50 dark:active:via-blue-500/50 dark:active:to-blue-400/50 ' +
+                'disabled:bg-linear-to-br dark:disabled:from-neutral-700 dark:disabled:via-neutral-700 dark:disabled:to-neutral-700 ' +
+                'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] ' +
+                'border-1 border-neutral-600 ' +
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-blue-300',
+            secondary: 'bg-linear-to-br dark:from-neutral-500 dark:via-neutral-700 dark:to-neutral-900 ' + 
+                'hover:bg-linear-to-br dark:hover:from-neutral-500 dark:hover:via-neutral-600 dark:hover:to-neutral-700 ' +
+                'active:bg-linear-to-br dark:active:from-neutral-900 dark:active:via-neutral-800 dark:active:to-neutral-700 ' +
+                'dark:disabled:bg-neutral-700 ' +
+                'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] ' +
+                'border-1 border-neutral-600 dark:hover:border-neutral-600 dark:active:border-neutral-600 ' +
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-neutral-300',
+            destructive: 'bg-linear-to-br dark:from-rose-300/50 dark:via-rose-400/50 dark:to-rose-500/50 ' + 
+                'hover:bg-linear-to-br dark:hover:from-rose-200/50 dark:hover:via-rose-300/50 dark:hover:to-rose-400/50 ' +
+                'active:bg-linear-to-br dark:active:from-rose-600/50 dark:active:via-rose-500/50 dark:active:to-rose-400/50 ' +
+                'disabled:bg-linear-to-br dark:disabled:from-neutral-700 dark:disabled:via-neutral-700 dark:disabled:to-neutral-700 ' +
+                'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] ' +
+                'border-1 border-neutral-600 ' +
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-rose-300',
             quiet: 'border-0 bg-transparent hover:bg-neutral-200 pressed:bg-neutral-300 text-neutral-800 dark:hover:bg-neutral-700 dark:pressed:bg-neutral-600 dark:text-neutral-100'
         },
-        isDisabled: {
-            true: 'border-transparent dark:border-transparent bg-neutral-100 dark:bg-neutral-800 text-neutral-300 dark:text-neutral-600 forced-colors:text-[GrayText]'
+        disabled: {
+            true: 'bg-transparent text-neutral-300 dark:text-neutral-500 hover:bg-transparent pressed:bg-transparent active:bg-transparent cursor-default'
         },
         isPending: {
             true: 'text-transparent'
@@ -27,38 +45,50 @@ let button = tv({
     defaultVariants: {
         variant: 'primary'
     },
-    compoundVariants: [
-        {
-            variant: 'quiet',
-            isDisabled: true,
-            class: 'bg-transparent dark:bg-transparent'
-        }
-    ]
+    // compoundVariants: [
+    //     {
+    //         variant: 'secondary',
+    //         isDisabled: true,
+    //         class: 'bg-transparent dark:bg-neutral-800 text-neutral-300 dark:text-neutral-500 hover:bg-transparent pressed:bg-transparent active:bg-transparent'
+    //     },
+    //     {
+    //         variant: 'destructive',
+    //         isDisabled: true,
+    //         class: 'border-transparent dark:border-transparent hover:border-transparent active:border-transparent bg-transparent dark:bg-transparent text-neutral-300 dark:text-neutral-500 hover:bg-transparent pressed:bg-transparent active:bg-transparent'
+    //     },
+    //     {
+    //         variant: 'quiet',
+    //         isDisabled: true,
+    //         class: 'bg-transparent dark:bg-transparent'
+    //     }
+    // ]
 });
 
 const Button: React.FC<ButtonProps> = (props) => {
     return (
-        <AriaButton
-            {...props}
-            className={composeRenderProps(
-                props.className,
-                (className, renderProps) => button({...renderProps, variant: props.variant, className})
-            )}
-        >
-            {composeRenderProps(props.children, (children, {isPending}) => (
-                <>
-                    {children}
-                    {isPending && (
-                        <span aria-hidden className="flex absolute inset-0 justify-center items-center">
-                        <svg className="w-4 h-4 text-white animate-spin" viewBox="0 0 24 24" stroke={props.variant === 'secondary' || props.variant === 'quiet' ? 'light-dark(black, white)' : 'white'}>
-                            <circle cx="12" cy="12" r="10" strokeWidth="4" fill="none" className="opacity-25" />
-                            <circle cx="12" cy="12" r="10" strokeWidth="4" strokeLinecap="round" fill="none" pathLength="100" strokeDasharray="60 140" strokeDashoffset="0" />
-                        </svg>
-                        </span>
-                    )}
-                </>
-            ))}
-        </AriaButton>
+        //<div className='flex w-fit h-fit rounded-xl bg-neutral-200 dark:bg-neutral-800 shadow-[-4px_-4px_10px_-4px_var(--color-neutral-500),4px_4px_10px_4px_var(--color-neutral-800)]'>
+            <AriaButton
+                {...props}
+                className={composeRenderProps(
+                    props.className,
+                    (className, renderProps) => button({...renderProps, variant: props.variant, className})
+                )}
+            >
+                {composeRenderProps(props.children, (children, {isPending}) => (
+                    <>
+                        {children}
+                        {isPending && (
+                            <span aria-hidden className="flex absolute inset-0 justify-center items-center">
+                                <svg className="w-4 h-4 text-white animate-spin" viewBox="0 0 24 24" stroke={props.variant === 'secondary' || props.variant === 'quiet' ? 'light-dark(black, white)' : 'white'}>
+                                    <circle cx="12" cy="12" r="10" strokeWidth="4" fill="none" className="opacity-25" />
+                                    <circle cx="12" cy="12" r="10" strokeWidth="4" strokeLinecap="round" fill="none" pathLength="100" strokeDasharray="60 140" strokeDashoffset="0" />
+                                </svg>
+                            </span>
+                        )}
+                    </>
+                ))}
+            </AriaButton>
+       // </div>
     );
 }
 
