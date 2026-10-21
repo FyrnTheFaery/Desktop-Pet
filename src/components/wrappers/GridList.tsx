@@ -23,8 +23,14 @@ export function GridList<T>({children, ...props}: GridListProps<T>) {
             className={composeTailwindRenderProps(
                 props.className,
                 isHorizontal
-                ? 'flex flex-row flex-nowrap overflow-x-auto relative w-full max-w-[500px] bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
-                : 'overflow-auto w-[200px] relative bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
+                ? 'flex flex-row flex-nowrap overflow-x-auto relative w-full max-w-[500px] ' + 
+                'bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg ' + 
+                'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] ' +
+                'font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
+                : 'overflow-auto w-[200px] relative bg-white dark:bg-neutral-800 ' + 
+                'border border-neutral-300 dark:border-neutral-700 rounded-lg ' +
+                // 'shadow-[inset_-2px_-2px_10px_-4px_var(--color-neutral-900),inset_2px_2px_10px_4px_var(--color-neutral-600)] ' + 
+                'font-sans empty:flex empty:items-center empty:justify-center empty:italic empty:text-sm p-2 gap-2'
             )}
         >
             {children}

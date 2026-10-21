@@ -1,4 +1,4 @@
-import { Dialog, DialogTrigger, GridListLoadMoreItem, Header, Heading } from "react-aria-components"
+import { Dialog, DialogTrigger, /* GridListLoadMoreItem, */ Header, Heading } from "react-aria-components"
 import { GridList, GridListItem } from "../wrappers/GridList"
 import Button from "../wrappers/Button"
 import { Icon } from "@iconify/react"
@@ -20,6 +20,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
     let selectedModels: Array<ModelInfoProps> = [];
     let [canEdit, setCanEdit] = useState<boolean>(false);
     let [canDelete, setCanDelete] = useState<boolean>(false);
+    let [canLaunch, setCanLaunch] = useState<boolean>(false);
 
     function handleAddClick(modelName: ModelInfoProps["name"], thumbnailSrc: ModelInfoProps["thumbnailSrc"]) {
         // FIX_ME - create a new model file in the backend as soon as the user finishes filling out the form
@@ -80,7 +81,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                 </GridListItem>
                 {/* <GridListLoadMoreItem /> */}
             </GridList>
-            <section className="flex flex-row w-full h-fit gap-8">
+            <section className="flex flex-col w-full h-fit gap-8 align-start">
                 <div className="flex flex-row w-fit h-fit gap-4">
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}
@@ -117,7 +118,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                         selectedModels.length > 1 ? 
                         <DialogTrigger>
                             {/* Clicking this button automatically opens the modal dialog */}
-                            <Button variant="secondary" isDisabled={canEdit}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
+                            <Button variant="secondary" isDisabled={!canEdit}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
                             
                             <Modal>
                                 <Dialog>
@@ -134,11 +135,11 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                                 </Dialog>
                             </Modal>
                         </DialogTrigger>
-                        : <Button variant="secondary" isDisabled={canEdit} onClick={() => handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
+                        : <Button variant="secondary" isDisabled={!canEdit} onClick={() => handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
                     }
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}
-                        <Button variant="destructive" isDisabled={canDelete}><Icon icon="material-symbols:delete-outline-rounded"/></Button>
+                        <Button variant="destructive" isDisabled={!canDelete}><Icon icon="material-symbols:delete-outline-rounded"/></Button>
                         
                         <Modal>
                             <Dialog>
@@ -163,7 +164,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                     {/* <Button isDisabled={canEdit} onClick={()=> handleEditClick()}><Icon icon="material-symbols:edit-outline-rounded"/></Button> */}
                     {/* <Button isDisabled={canDelete} onClick={()=>handleDeleteClick()}><Icon icon="material-symbols:delete-outline-rounded"/></Button> */}
                 </div>
-                <Button variant="primary" className={"w-full"}>Launch Models</Button>
+                <Button variant="primary" isDisabled={!canLaunch} className={"w-full"}>Launch Models</Button>
             </section>
         </section>
     )
