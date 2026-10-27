@@ -1,4 +1,4 @@
-import { Dialog, DialogTrigger, /* GridListLoadMoreItem, */ Header, Heading } from "react-aria-components"
+import { Dialog, DialogTrigger, /* GridListLoadMoreItem, */ Header, Heading, Key } from "react-aria-components"
 import { GridList, GridListItem } from "../wrappers/GridList"
 import Button from "../wrappers/Button"
 import { Icon } from "@iconify/react"
@@ -8,63 +8,83 @@ import { Modal } from "../wrappers/Modal"
 import Form from "../wrappers/Form"
 import { TextField } from "../wrappers/Textfield"
 import { FieldError } from "../wrappers/Field"
-
-export interface ModelPanelProps {
-    type: "Mouse" | "Keyboard" | "PNGTuber";
-}
+import { TabList } from "../wrappers/Tabs"
+import { Select, SelectItem } from "../wrappers/Select"
 
 // FIX_ME - Get the mouse models from the backend instead of relying on the frontend mockup
-export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
+export const ModelPanel: React.FC<{}> = () => {
 
     let models: Array<ModelInfoProps> = []
-    let selectedModels: Array<ModelInfoProps> = [];
+    let [modelFilter, setModelFilter] = useState<ModelInfoProps["type"] | "All">("All");
+    let [selectedModelIDs, setSelectedModelIDs] = useState<Set<ModelInfoProps["id"]>>(new Set([]));
     let [canEdit, setCanEdit] = useState<boolean>(false);
     let [canDelete, setCanDelete] = useState<boolean>(false);
     let [canLaunch, setCanLaunch] = useState<boolean>(false);
 
-    function handleAddClick(modelName: ModelInfoProps["name"], thumbnailSrc: ModelInfoProps["thumbnailSrc"]) {
+    function handleFilterChange(newFilter: ModelInfoProps["type"] | "All") {
+        setModelFilter(newFilter);
+    }
+
+    function handleSelectionChange(newModelIDs: Selection) {
+        // FIX_ME - Convert each selection to a modelID string
+        let newIDs: Set<String> = new Set<String>(newModelIDs.toString());
+        setSelectedModelIDs(newIDs);
+    }
+
+    function handleAddClick(name: ModelInfoProps["name"], type: ModelInfoProps["type"], src: ModelInfoProps["src"]) {
         // FIX_ME - create a new model file in the backend as soon as the user finishes filling out the form
-        let modelFile = "";
         let modelInfo: ModelInfoProps = {
-            id: modelName.toLowerCase(),
-            name: modelName,
-            thumbnailSrc: thumbnailSrc,
-            modelFile: modelFile
+            id: name.toLowerCase(),
+            type: type,
+            name: name,
+            src: src
         };
         models.push(modelInfo);
         // FIX_ME - Open an editor for the new model
     }
 
     function handleEditClick() {
-        selectedModels.forEach((model) => {
+        selectedModelIDs.forEach((modelID) => {
             // FIX_ME - For each selected model, open a new editor window for that model
         });
     }
 
     function handleDeleteClick() {
         // FIX_ME - Remove the models from the backend
-        let modelIndex = 0;
-        selectedModels.forEach((model) => {
-            modelIndex = models.indexOf(model);
-            models.splice(modelIndex, 0);
+        selectedModelIDs.forEach((modelID) => {
+            for(let i = 0; i < models.length; i++) {
+                if(models[i].id === modelID) {
+                    models.splice(i, 0);
+                    continue;
+                }
+                // FIX_ME - Throw an error if the model ID is not in the models
+            }
         });
-        selectedModels = [];
         if(models.length == 0) {
             setCanEdit(false);
             setCanDelete(false);
+            setCanLaunch(false);
         }
     }
 
     return (
         <section className="flex flex-col w-full h-full gap-4 px-4 py-4">
-            <Header className="flex flex-row w-full h-fit justify-between">
-                {type + " Models"} 
+            <Header className="flex flex-row w-full h-fit justify-between pr-2">
+                <Select>
+                    <SelectItem>All</SelectItem>
+                    <SelectItem>Keyboard</SelectItem>
+                    <SelectItem>Mouse</SelectItem>
+                    <SelectItem>PNGTuber</SelectItem>
+                </Select>
+                <Button variant="secondary"><Icon icon={"material-symbols:folder-open-outline-rounded"}/></Button>
             </Header>
             <GridList
                 // layout="grid"
                 orientation="vertical"
                 aria-label="Mouse Models"
                 selectionMode="multiple"
+                selectedKeys={selectedModelIDs as Iterable<Key>}
+                // onSelectionChange={(keys) => handleSelectionChange(keys)}
                 className={"flex flex-col w-full h-{100}"}
             >
                 <GridListItem>
@@ -81,7 +101,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                 </GridListItem>
                 {/* <GridListLoadMoreItem /> */}
             </GridList>
-            <section className="flex flex-col w-full h-fit gap-8 align-start">
+            <section className="flex flex-col w-full h-fit gap-8 align-start px-2">
                 <div className="flex flex-row w-fit h-fit gap-4">
                     <DialogTrigger>
                         {/* Clicking this button automatically opens the modal dialog */}
@@ -93,8 +113,9 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                                     <Form
                                         action={formData => {
                                             let modelName = formData.get('name') as String
+                                            let modelType = formData.get('type') as ModelInfoProps["type"]
                                             let thumbnail = formData.get('thumbnail') as String
-                                            handleAddClick(modelName, thumbnail)
+                                            handleAddClick(modelName, modelType, thumbnail)
                                         }}
                                         className="m-4"
                                     >
@@ -115,7 +136,7 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                         </Modal>
                     </DialogTrigger>
                     {
-                        selectedModels.length > 1 ? 
+                        selectedModelIDs.size > 1 ? 
                         <DialogTrigger>
                             {/* Clicking this button automatically opens the modal dialog */}
                             <Button variant="secondary" isDisabled={!canEdit}><Icon icon="material-symbols:edit-outline-rounded"/></Button>
@@ -144,18 +165,22 @@ export const ModelPanel: React.FC<ModelPanelProps> = ({ type }) => {
                         <Modal>
                             <Dialog>
                                 {({ close }) => (
-                                    <>
-                                        <Heading slot="title">Delete Models</Heading>
-                                        <p>Are you sure you want to delete these models?</p>
-
-                                        <p>This action cannot be undone.</p>
-
-                                        {/* FIX_ME - put the list of selected models here */}
-                                        
-                                        {/* Pressing this button automatically closes it */}
-                                        <Button variant="primary" onPress={close}>Cancel</Button>
-                                        <Button variant="destructive" onClick={() => handleDeleteClick()}>Delete Models</Button>
-                                    </>
+                                    <Form
+                                        action={() => {
+                                            handleDeleteClick()
+                                        }}
+                                        className="m-4"
+                                    >
+                                        <Heading slot="title">Delete Model</Heading>
+                                        <div className="flex flex-col">
+                                            <p>Are you sure you want to delete these models?</p>
+                                            <p className="text-rose-400">This action cannot be undone.</p>
+                                        </div>
+                                        <div className="flex flex-row w-full justify-end gap-4">
+                                            <Button variant="secondary" onPress={close}>Cancel</Button>
+                                            <Button variant="destructive" type="submit">Delete Model</Button>
+                                        </div>
+                                    </Form>
                                 )}
                             </Dialog>
                         </Modal>

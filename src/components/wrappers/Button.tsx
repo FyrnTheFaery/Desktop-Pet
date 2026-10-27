@@ -12,20 +12,20 @@ let button = tv({
     base: "flex flex-row justify-center items-center w-fit h-fit p-2 rounded-xl",
     variants: {
         variant: {
-            primary: 'bg-linear-to-br dark:from-blue-200/50 dark:via-blue-400/50 dark:to-blue-600/50 ' + 
-                'hover:bg-linear-to-br dark:hover:from-blue-200/50 dark:hover:via-blue-300/50 dark:hover:to-blue-400/50 ' +
-                'active:bg-linear-to-br dark:active:from-blue-700/50 dark:active:via-blue-500/50 dark:active:to-blue-400/50 ' +
+            primary: 'bg-linear-to-br dark:from-violet-200/50 dark:via-violet-400/50 dark:to-violet-600/50 ' + 
+                'hover:bg-linear-to-br dark:hover:from-violet-200/50 dark:hover:via-violet-300/50 dark:hover:to-violet-400/50 ' +
+                'active:bg-linear-to-br dark:active:from-violet-700/50 dark:active:via-violet-500/50 dark:active:to-violet-400/50 ' +
                 'disabled:bg-linear-to-br dark:disabled:from-neutral-700 dark:disabled:via-neutral-700 dark:disabled:to-neutral-700 ' +
                 'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] disabled:shadow-none ' +
                 'border-1 border-neutral-600 ' +
-                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-blue-300',
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-400 active:dark:text-violet-300',
             secondary: 'bg-linear-to-br dark:from-neutral-500 dark:via-neutral-700 dark:to-neutral-900 ' + 
                 'hover:bg-linear-to-br dark:hover:from-neutral-500 dark:hover:via-neutral-600 dark:hover:to-neutral-700 ' +
                 'active:bg-linear-to-br dark:active:from-neutral-900 dark:active:via-neutral-800 dark:active:to-neutral-700 ' +
                 'disabled:bg-linear-to-br dark:disabled:from-neutral-700 dark:disabled:via-neutral-700 dark:disabled:to-neutral-700 ' +
                 'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] disabled:shadow-none ' +
                 'border-1 border-neutral-600 dark:hover:border-neutral-600 dark:active:border-neutral-600 ' +
-                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-neutral-300',
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-400 active:dark:text-neutral-300',
             destructive: 'bg-linear-to-br dark:from-rose-300/50 dark:via-rose-400/50 dark:to-rose-500/50 ' + 
                 'hover:bg-linear-to-br dark:hover:from-rose-200/50 dark:hover:via-rose-300/50 dark:hover:to-rose-400/50 ' +
                 'active:bg-linear-to-br dark:active:from-rose-600/50 dark:active:via-rose-500/50 dark:active:to-rose-400/50 ' +
@@ -33,7 +33,7 @@ let button = tv({
                 'dark:disabled:bg-neutral-700 ' +
                 'shadow-[-4px_-4px_10px_-4px_var(--color-neutral-400),4px_4px_10px_4px_var(--color-neutral-900)] disabled:shadow-none ' +
                 'border-1 border-neutral-600 ' +
-                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-500 active:dark:text-rose-300',
+                'cursor-pointer disabled:cursor-not-allowed disabled:dark:text-neutral-400 active:dark:text-rose-300',
             quiet: 'border-0 bg-transparent hover:bg-neutral-200 pressed:bg-neutral-300 text-neutral-800 dark:hover:bg-neutral-700 dark:pressed:bg-neutral-600 dark:text-neutral-100'
         },
         disabled: {

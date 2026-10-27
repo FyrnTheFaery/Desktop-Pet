@@ -1,3 +1,5 @@
+import { Key } from "react-aria-components";
+
 export interface Trigger {}
 
 export interface SpriteSheet {
@@ -35,15 +37,16 @@ export interface Layer {
 
 export interface ModelProps {
     id: String;
+    type: "Mouse" | "Keyboard" | "PNGTuber";
     name: String;
-    thumbnailSrc: String;
+    src: String;
     width: number;
     height: number;
 }
 
 export interface ModelInfoProps {
-    id: String;
-    name: String;
-    thumbnailSrc: String;
-    modelFile: String;
+    id: ModelProps["id"];
+    type: ModelProps["type"];
+    name: ModelProps["name"];
+    src: ModelProps["src"];
 }

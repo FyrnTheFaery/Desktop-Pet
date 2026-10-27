@@ -14,9 +14,7 @@ function App() {
 			<Tabs>
 				<TabList className={"px-4 mt-4"}>
 					<Tab id="home" className={"px-2"}>Home</Tab>
-					<Tab id="pngtuber-model" className={"px-2"}>PNGTubers</Tab>
-					<Tab id="mouse-model" className={"px-2"}>Mice</Tab>
-					<Tab id="keyboard-model" className={"px-2"}>Keyboards</Tab>
+					<Tab id="models" className={"px-2"}>Models</Tab>
 					<Tab id="collaboration-settings" className={"px-2"}>Collaboration</Tab>
 					<Tab id="input-settings" className={"px-2"}>Settings</Tab>
 				</TabList>
@@ -30,14 +28,8 @@ function App() {
 					<TabPanel id="collaboration-settings">
 						<p>Collaboration</p>
 					</TabPanel>
-					<TabPanel id="mouse-model">
-						<ModelPanel type="Mouse"/>
-					</TabPanel>
-					<TabPanel id="keyboard-model">
-						<p>Keyboards</p>
-					</TabPanel>
-					<TabPanel id="pngtuber-model">
-						<p>PNGTuber Panel</p>
+					<TabPanel id="models">
+						<ModelPanel/>
 					</TabPanel>
 				</TabPanels>
 			</Tabs>
