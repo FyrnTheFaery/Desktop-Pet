@@ -8,20 +8,19 @@ import { Modal } from "../wrappers/Modal"
 import Form from "../wrappers/Form"
 import { TextField } from "../wrappers/Textfield"
 import { FieldError } from "../wrappers/Field"
-import { TabList } from "../wrappers/Tabs"
-import { Select, SelectItem } from "../wrappers/Select"
+import { SelectWithTagGroup } from "../wrappers/Select"
 
 // FIX_ME - Get the mouse models from the backend instead of relying on the frontend mockup
 export const ModelPanel: React.FC<{}> = () => {
 
     let models: Array<ModelInfoProps> = []
-    let [modelFilter, setModelFilter] = useState<ModelInfoProps["type"] | "All">("All");
+    let [modelFilter, setModelFilter] = useState<ModelInfoProps["type"] | null>(null);
     let [selectedModelIDs, setSelectedModelIDs] = useState<Set<ModelInfoProps["id"]>>(new Set([]));
     let [canEdit, setCanEdit] = useState<boolean>(false);
     let [canDelete, setCanDelete] = useState<boolean>(false);
     let [canLaunch, setCanLaunch] = useState<boolean>(false);
 
-    function handleFilterChange(newFilter: ModelInfoProps["type"] | "All") {
+    function handleFilterChange(newFilter: ModelInfoProps["type"] | null) {
         setModelFilter(newFilter);
     }
 
@@ -69,13 +68,21 @@ export const ModelPanel: React.FC<{}> = () => {
 
     return (
         <section className="flex flex-col w-full h-full gap-4 px-4 py-4">
-            <Header className="flex flex-row w-full h-fit justify-between pr-2">
-                <Select>
+            <Header className="flex flex-row w-full h-fit justify-between px-2">
+                {/* <Select items={modelFilter}>
                     <SelectItem>All</SelectItem>
                     <SelectItem>Keyboard</SelectItem>
                     <SelectItem>Mouse</SelectItem>
                     <SelectItem>PNGTuber</SelectItem>
-                </Select>
+                </Select> */}
+                <SelectWithTagGroup
+                    aria-label="Model Filters"
+                    tags={[
+                        {id: "Mouse", name: "Mouse"},
+                        {id: "Keyboard", name: "Keyboard"},
+                        {id: "PNGTuber", name: "PNGTuber"}
+                    ]}
+                />
                 <Button variant="secondary"><Icon icon={"material-symbols:folder-open-outline-rounded"}/></Button>
             </Header>
             <GridList

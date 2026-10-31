@@ -107,6 +107,10 @@ export interface DropdownSectionProps<T> extends ListBoxSectionProps<T> {
     items?: any;
 }
 
+export function DropdownListBox<T>(props: ListBoxProps<T>) {
+    return <AriaListBox {...props} className="dropdown-listbox" />;
+}
+
 export function DropdownSection<T>(props: DropdownSectionProps<T>) {
     return (
         <ListBoxSection className="first:-mt-[5px] after:content-[''] after:block after:h-[5px] last:after:hidden">
